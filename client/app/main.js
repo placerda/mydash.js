@@ -28,8 +28,13 @@ angular.module('DashContributorsService', ['ngResource']).factory('contributors'
 app.controller('DashController', function ($scope, sources, contributors) {
 
 
+    // $scope.selectedItem = {
+    //     url: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd"
+    // };
+
+    //placerda - define local test media
     $scope.selectedItem = {
-        url: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd"
+        url: "http://localhost/media/bbb_30fps.mpd"
     };
 
     sources.query(function (data) {
@@ -182,9 +187,13 @@ app.controller('DashController', function ($scope, sources, contributors) {
     $scope.loopSelected = true;
     $scope.scheduleWhilePausedSelected = true;
     $scope.localStorageSelected = true;
-    $scope.fastSwitchSelected = true;
-    $scope.ABRStrategy = "abrDynamic";
-    //placerda
+    //placerda - fastswitch
+    // $scope.fastSwitchSelected = true;
+    $scope.fastSwitchSelected = false;
+
+    //placerda - unselect abrDynamic and enable custom ABR
+    // $scope.ABRStrategy = "abrDynamic";
+    $scope.ABRStrategy = "abrThroughput";
     $scope.customABRRulesSelected = true;
 
     ////////////////////////////////////////
@@ -196,13 +205,18 @@ app.controller('DashController', function ($scope, sources, contributors) {
     $scope.video = document.querySelector(".dash-video-player video");
     $scope.player = dashjs.MediaPlayer().create();
 
-
     $scope.player.initialize($scope.video, null, $scope.autoPlaySelected);
 
-    // placerda
-    //$scope.player.extend('ABRRulesCollection', MyABRRulesCollection, true);
 
-    $scope.player.setFastSwitchEnabled(true);
+    // placerda - set inital bitrate and stablebuffertime
+    $scope.player.setInitialBitrateFor('video', 0);
+    $scope.player.setInitialBitrateFor('audio', 0);
+    $scope.player.setStableBufferTime(20);
+
+    //placerda - fastswitch
+    // $scope.player.setFastSwitchEnabled(true);
+    $scope.player.setFastSwitchEnabled(false);
+
     $scope.player.attachVideoContainer(document.getElementById("videoContainer"));
     // Add HTML-rendered TTML subtitles except for Firefox < v49 (issue #1164)
     if (doesTimeMarchesOn()) {
@@ -497,7 +511,7 @@ app.controller('DashController', function ($scope, sources, contributors) {
 
     $scope.toggleUseCustomABRRules = function () {
 
-    //placerda
+    //placerda - enable custom ABR
         if ($scope.customABRRulesSelected) {
             $scope.player.useDefaultABRRules(false);
             $scope.player.addABRCustomRule('qualitySwitchRules', 'SmoothedThroughput', SmoothedThroughputRule);
@@ -505,13 +519,13 @@ app.controller('DashController', function ($scope, sources, contributors) {
             //$scope.player.addABRCustomRule('qualitySwitchRules', 'ThroughputRule', CustomThroughputRule);
         } else {
             $scope.player.useDefaultABRRules(true);
-            //$scope.player.removeABRCustomRule('SmoothedThroughput');
+            $scope.player.removeABRCustomRule('SmoothedThroughput');
             //$scope.player.removeABRCustomRule('DownloadRatioRule');
             //$scope.player.removeABRCustomRule('ThroughputRule');
         }
     };
 
-    //placerda
+    //placerda - enable custom ABR
     $scope.toggleUseCustomABRRules();
 
     $scope.toggleFastSwitch = function () {

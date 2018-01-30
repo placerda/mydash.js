@@ -1,3 +1,10 @@
+#################
+#placerda
+#################
+notas/
+media/
+notes.txt
+
 /simple.html
 #################
 ## Node.js
@@ -181,4 +188,3 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
-

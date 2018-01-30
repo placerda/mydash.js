@@ -35,7 +35,9 @@
 
     <script src="app/rules/DownloadRatioRule.js"></script>
     <script src="app/rules/ThroughputRule.js"></script>
-    <script src="app/rules/SmoothedThroughputRule.js"></script>
+    <!-- placerda -->
+    <!-- <script src="app/rules/SmoothedThroughputRule.js"></script> -->
+    <script src="app/rules/SmoothedThroughputRuleImproved.js"></script>
 
 </head>
 <body ng-controller="DashController" >
@@ -150,7 +152,7 @@
                     </label>
                     <label data-toggle="tooltip" data-placement="right"
                            title="Dynamically switch between BOLA and Throughput strategies.">
-                        <input  type="radio" id="abrDynamic" autocomplete="off" name="abrStrategy" checked="checked" ng-click="changeABRStrategy('abrDynamic')" >
+                        <input  type="radio" id="abrDynamic" autocomplete="off" name="abrStrategy" ng-click="changeABRStrategy('abrDynamic')" >
                         ABR Strategy: Dynamic
                     </label>
                     <label  data-toggle="tooltip" data-placement="right"
@@ -160,7 +162,8 @@
                     </label>
                     <label  data-toggle="tooltip" data-placement="right"
                             title="Choose bitrate based on recent throughput.">
-                        <input type="radio" id="abrThroughput" autocomplete="off" name="abrStrategy" ng-click="changeABRStrategy('abrThroughput')">
+                        <!-- placerda -->
+                        <input type="radio" id="abrThroughput" autocomplete="off" name="abrStrategy" checked="checked" ng-click="changeABRStrategy('abrThroughput')">
                         ABR Strategy: Throughput
                     </label>
                     <label class="topcoat-checkbox" data-toggle="tooltip" data-placement="right"
@@ -315,6 +318,7 @@
                                 <label class="text-primary" for="videoRatioCB" data-toggle="tooltip" data-placement="top"
                                   title="The minimum, average and maximum ratio of the segment playback time to total download time over the last 4 segments">Ratio (min|avg|max) :</label> {{videoRatio}}
                             </div>
+
                         </div>
                       </div>
                       <div class="tab-pane fade" id="audioStatsTab">
