@@ -7,8 +7,8 @@ const cookieParser = require('cookie-parser');
 const redis   = require("redis");
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const redis_host = "docker.for.mac.localhost";
-const influxdb_host = "docker.for.mac.localhost";
+const redis_host = "redis";
+const influxdb_host = "influxdb";
 
 
 // Constants

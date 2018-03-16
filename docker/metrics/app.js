@@ -1,13 +1,14 @@
 'use strict';
 
-const redis   = require("redis");
+const redis = require("redis");
 const Influx = require("influx");
 
 // Constants
 const INTERVAL = 1000; //in ms
 const BANDWIDTH = 2 * 10485760; //in bps
 // const REDIS_HOST = "docker.for.mac.localhost";
-const INFLUXDB_HOST = "docker.for.mac.localhost";
+// const INFLUXDB_HOST = "docker.for.mac.localhost";
+const INFLUXDB_HOST = "influxdb";
 
 // Initialization
 //redis
@@ -35,6 +36,7 @@ const influx = new Influx.InfluxDB({
  ]
 })
 
+influx.createDatabase('mydash')
 
 function execute(){
 
