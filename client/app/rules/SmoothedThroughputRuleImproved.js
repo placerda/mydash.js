@@ -145,7 +145,7 @@ function SmoothedThroughputClass(config) {
     //let random = Math.floor((Math.random() * 10) + 1);
     momento = Date.now() * 1000000
     const metrica = {"type": type, "fields": fields, "time": momento}
-    xhr.open("POST", "http://localhost/mydash/metrics", true);
+    xhr.open("POST", "/mydash/metrics", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(metrica));
   }
