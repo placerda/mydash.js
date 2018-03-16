@@ -11,10 +11,10 @@ docker-compose up --build
 
 2. Configure grafana
 
-point to influxdb influxdb:8086 user root/root
+Access the dashboard: http://localhost:3000 (admin/admin)
 
-3. Access the software
+Point the database to influxdb
+  host: influxdb:8086
+  user: root/root
 
-dashboard: http://localhost:3000 (admin/admin)
-
-player: http://localhost
+3. Access the player: http://localhost
