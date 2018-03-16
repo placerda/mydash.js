@@ -4,7 +4,7 @@ This repository contains code to help the evaluation of new adaptation rules imp
 
 ## Architecture Overview
 
-todo
+![Architecture Overview](docs/architecture.png?raw=true "Architecture Overview")
 
 ## Metrics Dashboard
 
