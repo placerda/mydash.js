@@ -1,10 +1,24 @@
+# mydash.js
+
+This repository contains code to help the evaluation of new adaptation rules implemented in the dash.js player
+
+## Architecture Overview
+
+todo
+
+## Metrics Dashboard
+
+![Metrics Dashboard](docs/dashboard.png?raw=true "Metrics Dashboard")
+
+## Quick Start
+
 - Requirements
 
 Docker: https://www.docker.com/community-edition
 
 Docker Compose: https://docs.docker.com/compose/install/
 
-- Quick Start
+- Procedure
 
 1. Build and run the containers
 
