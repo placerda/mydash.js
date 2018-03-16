@@ -7,14 +7,20 @@ Docker Compose: https://docs.docker.com/compose/install/
 
 1. Run the containers
 
-docker-compose up --build
+docker-compose up --build -d
 
 2. Configure grafana
 
-Access the dashboard: http://localhost:3000 (admin/admin)
+Access the dashboard: http://<hostname>:3000 (admin/admin)
 
-Point the database to influxdb
-  host: influxdb:8086
-  user: root/root
+If it's the first time, point the database to influxdb:
 
-3. Access the player: http://localhost
+![Grafana config](docs/grafana-config.png?raw=true "Grafana config")
+
+(user: root/root)
+
+3. Access the player: http://<hostname>
+
+Useful information:
+
+- stop the containers: docker-compose down
