@@ -6,11 +6,11 @@ This repository contains a mechanism to evaluate the efficiency, fairness and st
 
 ![Architecture Overview](docs/architecture.png?raw=true "Architecture Overview")
 
-## Metrics Dashboard
+## How it works?
 
 DEMO: to-be-done
 
-## Quick Start
+## How to install?
 
 - Requirements
 
@@ -20,7 +20,7 @@ Docker: https://www.docker.com/community-edition
 
 Docker Compose: https://docs.docker.com/compose/install/
 
-- Procedure
+- Step by step
 
 1. Build and run the containers
 
@@ -39,7 +39,7 @@ database to influxdb as shown in the following screen (influxdb user/password: r
 
 3. Import the dashboard
 
-In the Grafana screen select create then click on Import.
+In the Grafana screen select **Create** then click on **Import**.
 
 ![Importing the Dashboard](docs/importing01.png?raw=true "Importing the Dashboard")
 
@@ -51,8 +51,8 @@ After importing the dashboard you will see it in Grafana, probably there will be
 
 ![Metrics Dashboard](docs/dashboard.png?raw=true "Metrics Dashboard")
 
-4. Access the player (http://host_name/) then load and play the video to see it working.
+4. Access the player (http://host_name/) then load and play the demo video to see the metrics in your dashboard.
 
-Other information:
+More information:
 
 - to stop the containers: docker-compose down
