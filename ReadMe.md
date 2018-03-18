@@ -1,6 +1,6 @@
 # mydash.js
 
-This repository contains a mechanism to evaluate the efficiency, fairness and stability of adaptation rules implemented in the dash.js player.
+This repository contains a demo of a mechanism to evaluate the **efficiency**, **fairness** and **stability** of adaptation rules implemented in the dash.js player.
 
 ## Architecture Overview
 
