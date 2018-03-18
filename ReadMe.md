@@ -6,11 +6,11 @@ This repository contains a mechanism to evaluate the efficiency, fairness and st
 
 ![Architecture Overview](docs/architecture.png?raw=true "Architecture Overview")
 
-## How it works?
+## How does it work?
 
 DEMO: to-be-done
 
-## How to install?
+## How to setup this demo on my machine?
 
 - Requirements
 
