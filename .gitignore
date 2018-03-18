@@ -4,6 +4,8 @@
 notas/
 media/
 notes.txt
+deploy.sh
+bkp/
 
 /simple.html
 #################

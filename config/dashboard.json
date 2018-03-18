@@ -91,20 +91,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "alias": "$col",
+          "groupBy": [],
           "measurement": "system_quality",
           "orderByTime": "ASC",
           "policy": "default",
@@ -117,10 +105,22 @@
                   "instability"
                 ],
                 "type": "field"
-              },
+              }
+            ],
+            [
               {
-                "params": [],
-                "type": "mean"
+                "params": [
+                  "inefficiency"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "unfairness"
+                ],
+                "type": "field"
               }
             ]
           ],
@@ -130,7 +130,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "System",
+      "title": "System Quality",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -174,6 +174,7 @@
         "y": 0
       },
       "id": 4,
+      "links": [],
       "pageSize": null,
       "scroll": true,
       "showHeader": true,
@@ -204,10 +205,44 @@
         }
       ],
       "targets": [
-        {}
+        {
+          "groupBy": [],
+          "measurement": "system_quality",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "inefficiency"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "unfairness"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "instability"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
       ],
-      "title": "Panel Title",
-      "transform": "timeseries_to_columns",
+      "title": "System Quality",
+      "transform": "table",
       "type": "table"
     },
     {
@@ -280,7 +315,7 @@
       "timeShift": null,
       "title": "Clients",
       "tooltip": {
-        "shared": true,
+        "shared": false,
         "sort": 0,
         "value_type": "individual"
       },
@@ -308,7 +343,7 @@
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ]
     },
@@ -323,6 +358,7 @@
         "y": 9
       },
       "id": 6,
+      "links": [],
       "pageSize": null,
       "scroll": true,
       "showHeader": true,
@@ -353,10 +389,35 @@
         }
       ],
       "targets": [
-        {}
+        {
+          "groupBy": [
+            {
+              "params": [
+                "client_short"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "client_quality",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "representation"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
       ],
-      "title": "Panel Title",
-      "transform": "timeseries_to_columns",
+      "title": "Clients",
+      "transform": "table",
       "type": "table"
     }
   ],
@@ -368,8 +429,8 @@
     "list": []
   },
   "time": {
-    "from": "2018-03-16T12:53:38.520Z",
-    "to": "2018-03-16T13:21:52.831Z"
+    "from": "now-15m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -399,5 +460,5 @@
   "timezone": "",
   "title": "dash.js",
   "uid": "2LZdd_Rik",
-  "version": 13
+  "version": 2
 }
