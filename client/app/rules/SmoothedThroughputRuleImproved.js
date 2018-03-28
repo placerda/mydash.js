@@ -143,7 +143,7 @@ function SmoothedThroughputClass(config) {
   function writeMetric(type, fields){
     var xhr = new XMLHttpRequest();
     //let random = Math.floor((Math.random() * 10) + 1);
-    momento = Date.now() * 1000000
+    momento = Date.now() * 1000000 //convert nanoseconds (influxdb default's)
     const metrica = {"type": type, "fields": fields, "time": momento}
     xhr.open("POST", "/mydash/metrics", true);
     xhr.setRequestHeader('Content-Type', 'application/json');

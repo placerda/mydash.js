@@ -421,7 +421,7 @@
       "type": "table"
     }
   ],
-  "refresh": false,
+  "refresh": "5s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -429,7 +429,7 @@
     "list": []
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -460,5 +460,5 @@
   "timezone": "",
   "title": "dash.js",
   "uid": "2LZdd_Rik",
-  "version": 2
+  "version": 3
 }
