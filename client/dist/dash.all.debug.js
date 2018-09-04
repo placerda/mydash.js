@@ -44262,6 +44262,18 @@ function BolaRule(config) {
         }
     }
 
+    // placerda
+    // send metric to db
+    function writeMetric(type, fields) {
+        var xhr = new XMLHttpRequest();
+        //let random = Math.floor((Math.random() * 10) + 1);
+        var momento = Date.now() * 1000000; //convert nanoseconds (influxdb default's)
+        var metrica = { "type": type, "fields": fields, "time": momento };
+        xhr.open("POST", "/mydash/metrics", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(metrica));
+    }
+
     function getMaxIndex(rulesContext) {
         var mediaInfo = rulesContext.getMediaInfo();
         var mediaType = rulesContext.getMediaType();
@@ -44385,6 +44397,18 @@ function BolaRule(config) {
                 bolaState.state = BOLA_STATE_STARTUP;
                 clearBolaStateOnSeek(bolaState);
         }
+
+        // placerda
+        log('bola');
+        var fragment = metrics.RequestsQueue.executedRequests[metrics.RequestsQueue.executedRequests.length - 1]; // último fragmento transferido
+        var representation = switchRequest.quality + 1 > 0 ? switchRequest.quality + 1 : fragment.quality + 1;
+        var bitrate = mediaInfo.bitrateList[representation - 1].bandwidth;
+        var metricFields = {
+            "representation": representation,
+            "bitrate": bitrate
+        };
+        log('bola :: ' + mediaType);
+        if (mediaType == "video") writeMetric(mediaType, metricFields);
 
         return switchRequest;
     }

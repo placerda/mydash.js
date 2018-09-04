@@ -210,7 +210,7 @@ app.controller('DashController', function ($scope, sources, contributors) {
     // placerda - set inital bitrate and stablebuffertime
     $scope.player.setInitialBitrateFor('video', 0);
     $scope.player.setInitialBitrateFor('audio', 0);
-    $scope.player.setStableBufferTime(20);
+    $scope.player.setStableBufferTime(30);
 
     //placerda - fastswitch
     // $scope.player.setFastSwitchEnabled(true);
@@ -861,6 +861,9 @@ app.controller('DashController', function ($scope, sources, contributors) {
 
     (function init() {
 
+        //placerda -- autoload to run the tests
+        //$scope.doLoad();
+
         $scope.initChartingByMediaType("video");
         $scope.initChartingByMediaType("audio");
 
@@ -895,6 +898,7 @@ app.controller('DashController', function ($scope, sources, contributors) {
         }
 
         if (item.url) {
+
             var startPlayback = false;
 
             $scope.selectedItem = item;
@@ -906,7 +910,9 @@ app.controller('DashController', function ($scope, sources, contributors) {
             if (startPlayback) {
                 $scope.doLoad();
             }
+
         }
+
     })();
 });
 

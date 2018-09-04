@@ -3,9 +3,8 @@
 #################
 notas/
 media/
-notes.txt
-deploy.sh
 bkp/
+sandbox/
 .env
 
 /simple.html

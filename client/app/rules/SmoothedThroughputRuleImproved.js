@@ -49,27 +49,79 @@ function SmoothedThroughputClass(config) {
         const msd = fragment.duration * 1000;
         const mi = msd/sft;
 
-        const maxIndex = rulesContext.getMediaInfo().representationCount; //9
+        const maxIndex = rulesContext.getMediaInfo().representationCount; // 9
 
-        // calcula 𝜀
-        let epsilon = Number.MAX_SAFE_INTEGER // inicializa com valor máximo possível
-        if (fragment.quality != maxIndex-1)
+        let epsilon = Number.MAX_SAFE_INTEGER; // inicializa no máximo
+
+        if (fragment.quality < maxIndex-1){ // < 8
+
+          // calcula 𝜀
           epsilon = (bitrateList[fragment.quality+1].bandwidth - currentBitrate)/currentBitrate
 
-        // define 𝛾
-        const gamma = 0.67
-
-        // if μ  > (1 + 𝜀),  select next bitrate one level over the curent rate
-        if ((mi > (1+epsilon)) && (bufferLevel > safetyBufferLevel)){
-          if ((fragment.quality+1) < maxIndex){
-            nextIndex = fragment.quality+1
-            reason = "μ > (1 + 𝜀)"
+          // se μ  > (1 + 𝜀),  seleciona o proximo bitrate em nível acima do atual
+          if ((mi > (1+epsilon)) && (bufferLevel > safetyBufferLevel)){
+            if ((fragment.quality+1) < maxIndex){
+              nextIndex = fragment.quality+1
+              reason = "μ > (1 + 𝜀)"
+            }
           }
         }
 
+        // define 𝛾
+        const gamma = 0.9
+
+        // NEW
+        const reduceBufferLevel = 2 * (fragment.duration * 1000); // define o buffer mínimo para reduzir nível
+        if ((fragment.quality > 0) && ((mi < gamma) && (bufferLevel < reduceBufferLevel))){
+          const refBitrate = currentBitrate
+          nextIndex = bitrateList.reduceRight(
+              (max, bitrate, index)=>
+                {
+                  if ((bitrate.bandwidth < refBitrate) && (index > max)){
+                    return index;
+                  } else {
+                    return max;
+                  }
+                }
+            ,0)
+          reason = "reduced by buffer";
+        }
+
+        // OLD (gamma + minimum buffer) OBS: gama original was 0.67
         // senao se ( μ < 𝛾 ) ou ( comprimento do buffer < tamanho mínimo pré-calculado)
         // reduz a taxa para a primeira representação menor que μ * b𝑐
-        if ((fragment.quality > 0) && ((mi < gamma) || (bufferLevel < minimumBufferLevel))){
+        // if ((fragment.quality > 0) && ((mi < gamma) || (bufferLevel < minimumBufferLevel))){
+        //   const refBitrate = (mi>=1?1:mi) * currentBitrate
+        //   nextIndex = bitrateList.reduceRight(
+        //       (max, bitrate, index)=>
+        //         {
+        //           if ((bitrate.bandwidth < refBitrate) && (index > max)){
+        //             return index;
+        //           } else {
+        //             return max;
+        //           }
+        //         }
+        //     ,0)
+        //   reason = ((mi < gamma)?"( μ < 𝛾 )":"buffer_low")
+        // }
+
+        // OLD (gamma only)
+        // if ((fragment.quality > 0) && (mi < 0.75)){ //todo: colocar gamma
+        //   const refBitrate = currentBitrate
+        //   nextIndex = bitrateList.reduceRight(
+        //       (max, bitrate, index)=>
+        //         {
+        //           if ((bitrate.bandwidth < refBitrate) && (index > max)){
+        //             return index;
+        //           } else {
+        //             return max;
+        //           }
+        //         }
+        //     ,0)
+        //   reason = "( μ < 𝛾 )";
+        // }
+
+        if ((fragment.quality > 0) && (bufferLevel < minimumBufferLevel)){
           const refBitrate = (mi>=1?1:mi) * currentBitrate
           nextIndex = bitrateList.reduceRight(
               (max, bitrate, index)=>
@@ -83,6 +135,7 @@ function SmoothedThroughputClass(config) {
             ,0)
           reason = ((mi < gamma)?"( μ < 𝛾 )":"buffer_low")
         }
+
 
         let sr = SwitchRequest(context).create(nextIndex, reason);
 

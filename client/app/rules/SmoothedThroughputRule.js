@@ -59,7 +59,7 @@ function SmoothedThroughputClass(config) {
         // define 𝛾
         const gamma = 0.67
 
-        // if μ  > (1 + 𝜀),  select next bitrate one level over the curent rate
+        // se μ  > (1 + 𝜀),  seleciona o proximo bitrate em nível acima do atual
         if ((mi > (1+epsilon)) && (bufferLevel > safetyBufferLevel)){
           if ((fragment.quality+1) < maxIndex){
             nextIndex = fragment.quality+1
@@ -125,6 +125,15 @@ function SmoothedThroughputClass(config) {
           //' ti:', playbackController.getTime().toFixed(1)
         );
 
+        const representation  = (nextIndex+1>0)?nextIndex+1:fragment.quality+1
+        const bitrate = bitrateList[representation-1].bandwidth;
+        let metricFields = {
+          "representation": representation,
+          "bitrate": bitrate
+        }
+        if (mediaType == "video")
+          writeMetric(mediaType, metricFields);
+
         return sr;
 
       }
@@ -139,6 +148,18 @@ function SmoothedThroughputClass(config) {
   function extractFileExtension(str){
       return str.substr(str.length-3, 3)
       //return str.split('/').pop().replace(/bbb_30fps_/i, "").replace(/bbb_a64k_/i, "");
+  }
+
+
+  // send metric to db
+  function writeMetric(type, fields){
+    var xhr = new XMLHttpRequest();
+    //let random = Math.floor((Math.random() * 10) + 1);
+    momento = Date.now() * 1000000 //convert nanoseconds (influxdb default's)
+    const metrica = {"type": type, "fields": fields, "time": momento}
+    xhr.open("POST", "/mydash/metrics", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(metrica));
   }
 
   function numberWithCommas(x) {

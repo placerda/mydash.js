@@ -117,6 +117,7 @@ function instability(all_records, momento){
 }
 
 function switchsteps_sum(all_records, momento){
+  let momentoms = Math.trunc(momento / 1000000); // uses miliseconds to avoid going over Javascript maximum number
   let clients = all_records.filter((element, index, self) =>  // get unique clients in the time range
               index === self.findIndex((t) => ((t.client === element.client))))
   let sum = 0;
@@ -126,8 +127,9 @@ function switchsteps_sum(all_records, momento){
       if (clients[i].client == all_records[cur].client){
         if (prev == -1) prev = cur;
         else if (all_records[prev].bitrate != all_records[cur].bitrate){
-          let w = SWITCH_STEPS_NANO_RANGE - Math.trunc(momento - all_records[prev].time);
+          let w = Math.trunc(SWITCH_STEPS_NANO_RANGE / 1000000 ) - (momentoms - all_records[prev].time.getTime());
           sum = sum + (Math.abs(all_records[prev].bitrate - all_records[cur].bitrate) * w);
+          prev = cur;
         }
       }
     }
@@ -138,9 +140,14 @@ function switchsteps_sum(all_records, momento){
 
 function bitrates_sum(all_records, momento){
   let sum = 0;
+  let momentoms = Math.trunc(momento / 1000000); // uses miliseconds to avoid going over Javascript maximum number
   for (let cur = 0; cur < all_records.length; cur++ ){
-        let w = SWITCH_STEPS_NANO_RANGE - Math.trunc(momento - all_records[cur].time);
+        log.info("cur: " + cur);
+        log.info("momentoms: " + momentoms);
+        let w = Math.trunc(SWITCH_STEPS_NANO_RANGE / 1000000) - (momentoms - all_records[cur].time.getTime());
         sum = sum + (all_records[cur].bitrate * w);
+        log.info("w: " + w);
+        log.info("sum: " + sum);
       }
       log.info("bitrates_sum: " + sum);
       return sum;

@@ -184,7 +184,7 @@
       },
       "styles": [
         {
-          "alias": "Time",
+          "alias": "time",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
@@ -368,7 +368,7 @@
       },
       "styles": [
         {
-          "alias": "Time",
+          "alias": "time",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
@@ -381,11 +381,11 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "decimals": 2,
+          "decimals": 0,
           "pattern": "/.*/",
           "thresholds": [],
           "type": "number",
-          "unit": "short"
+          "unit": "none"
         }
       ],
       "targets": [
@@ -407,7 +407,7 @@
             [
               {
                 "params": [
-                  "representation"
+                  "bitrate"
                 ],
                 "type": "field"
               }
@@ -460,5 +460,5 @@
   "timezone": "",
   "title": "dash.js",
   "uid": "2LZdd_Rik",
-  "version": 3
+  "version": 6
 }
